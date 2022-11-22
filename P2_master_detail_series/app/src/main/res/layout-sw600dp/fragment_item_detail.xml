@@ -1,0 +1,95 @@
+<!-- Adding the same root's ID for view binding as other layout configurations -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_detail_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/item_detail_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingStart="@dimen/container_horizontal_margin"
+            android:paddingTop="16dp"
+            android:paddingEnd="@dimen/container_horizontal_margin"
+            android:paddingBottom="16dp">
+
+
+            <ImageView
+                android:id="@+id/ivPortada"
+                android:layout_width="match_parent"
+                android:scaleType="fitCenter"
+                android:layout_height="300dp" />
+
+
+            <TextView
+                android:id="@+id/tvSerieName"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textIsSelectable="true"
+                android:layout_marginTop="15dp"
+                tools:context="com.catata.p2_master_detail_series.ItemDetailFragment" />
+
+            <LinearLayout
+                android:id="@+id/llMoreInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/tvGenres"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="?android:attr/textAppearanceLarge"
+                    android:text="@string/genres"
+                    android:layout_marginTop="15dp"/>
+
+                <TextView
+                    android:id="@+id/tvLanguage"
+                    android:layout_width="match_parent"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"/>
+
+                <TextView
+                    android:id="@+id/tvPremiered"
+                    android:layout_width="match_parent"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"/>
+
+                <TextView
+                    android:id="@+id/tvUrlSite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"
+                    style="?android:attr/textAppearanceLarge"
+                    android:layout_marginTop="15dp"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_dialog_info" />
+    </androidx.constraintlayout.widget.ConstraintLayout>

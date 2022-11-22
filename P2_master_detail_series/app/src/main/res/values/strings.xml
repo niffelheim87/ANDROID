@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">P2_master_detail_series</string>
+    <string name="title_item_detail">Item Detail</string>
+    <string name="show_more_info">Press accept for more info</string>
+    <string name="hide_more_info">Hide extra info?</string>
+    <string name="url"><b>URL:</b>\n</string>
+    <string name="genres">Genres:\n</string>
+    <string name="language">Language:\n</string>
+    <string name="premiered">Premiered time:\n</string>
+</resources>
