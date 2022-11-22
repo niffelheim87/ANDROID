@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<!-- saved from url=(0076)https://sdram58.github.io/apuntesPMDM/unidades2223/ud3_starting_android.html -->
+<html lang="en" data-lt-installed="true"><input type="hidden" id="__yoroi_connector_api_injected_type" value="prod"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starting With Android. My first App</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://sdram58.github.io/apuntesPMDM/favicon.ico">
+    <link rel="stylesheet" href="./Starting With Android. My first App_files/prism.css">
+    <link rel="stylesheet" href="./Starting With Android. My first App_files/styles.css">
+    <script src="./Starting With Android. My first App_files/script.js.descarga"></script>
+<style>[_nghost-rsn-c52]{font-family:Open Sans,sans-serif;color:#121212}</style></head>
+<body class="line-numbers">
+    <h1>Starting With Android. My first App</h1>
+
+    <div class="main-menu">
+        <div class="fila">
+            <a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud3_starting_android.html#sNewProject">Create an Android Project</a><a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud3_starting_android.html#sProjectStructure">Project Structure</a><a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud3_starting_android.html#sEditingLayout">Editing Layout</a>
+        </div>
+        <div class="fila">
+            <a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud3_starting_android.html#sProgrammingAction">Programming Action</a><a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud3_starting_android.html#sPractice">Practice</a><a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud3_starting_android.html#sWebgrafia">Webgraphy</a>
+        </div>
+         
+    </div>
+
+    <br><br><br><br><br>
+    <p>In this topic we are going to develop our first mobile application with Android Studio and Kotlin.</p>
+    <p>You will learn:
+        </p><ul>
+            <li>How to <span class="d-word">create</span>  and <span class="d-word">run</span>  a project with Android Studio and also, how to debug applications.</li>
+            <li>To know the <span class="d-word">structure</span>  of a project and its most relevant files.</li>
+            <li>To use the most <span class="d-word">basic views</span> , and assign <span class="d-word">events</span>  to them.</li>
+        </ul>
+    <p></p>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3_runningExample.gif"><br><figcaption>Running sample</figcaption></figure>
+    <br>
+
+    <a class="enlace" target="_blank" href="https://github.com/sdram58/PMDM2021/tree/master/UD3_ClicksCounter">Link to github</a> 
+    
+
+
+    <!--*********************************************************Create an Android Project***********************************************************-->
+    <section class="apartado">
+    <a name="sNewProject"></a>
+    <h2>Create an Android Project</h2>
+
+    <p>In Android Studio, create a new project:</p>
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">If you haven't opened a project yet, on the <span class="negrita">welcome screen</span>, click 
+        <span class="d-word">New  project</span> :</span>
+        </section>
+
+        
+    <section class="marco-b">
+        <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-25-13-06-29.png"><br><figcaption></figcaption></figure>        
+    </section>
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">If you have already opened a project: Go to <span class="negrita">File -&gt; New -&gt; New Project</span> </span>
+        </section>
+    <section class="marco-b">
+        
+            <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-25-13-12-39.png"><br><figcaption></figcaption></figure>
+            <br>
+            
+    </section>
+           
+    <br>
+    <p>Choose the template for the <span class="negrita">main Activity</span>  of the App. For this practice choose <span class="d-word">Empty Activity</span> .</p>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3-2022-09-29-11-12-41.png"><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>Fill the fields on the next screen. Remember in package name field to set your data, that is com.XXYYZZ.appname where XXYYZZ stands for two first letters of your name and surnames. For instance, some one named "Pedro García Marquez" should set <span class="cursiva">com.pegama.appName</span> </p>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3-2022-09-29-11-18-47.png"><br><figcaption></figcaption></figure>
+    <br>
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">Minimum SDK</span>
+        </section>
+    <section class="marco-b">
+            <p>It is the minimum version of Android that the devices must have in order to run the app. To support as many devices as possible, it should be set to the lowest possible version. However, the lower the version, the less modern android features the app can use.</p>
+    </section>
+
+</section>
+        
+    <!--*********************************************************Project Structure***********************************************************-->
+    <section class="apartado">
+    <a name="sProjectStructure"></a>
+    <h2>Project Structure</h2>
+    
+    <p>The created project is a basic "Hello World" application that contains some <span class="negrita">default files</span>.</p>
+    <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-25-19-05-02.png"><br><figcaption>Main files and dirs in Android App</figcaption></figure>
+    <br>
+    
+    <p>Let's have a look at the important ones:</p>
+    <ul>
+        <li>
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">app/src/main/<span class="subrayado">AndroidManifest.xml</span> </span>
+                </section>
+            <section class="marco-b">
+                <p>The <span class="d-word">manifest</span>  file describes the fundamental characteristics of the application and defines each of its components. Here we will specify the Activities that our app has and the <span class="d-word">permissions</span>  it requires (Camera, Contacts, Internet, etc.)</p>        
+            </section>
+        </li>
+        <li>
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">app/src/main/java/com.catata.clickscounter/<span class="subrayado">MainActivity.kt</span> </span>
+                </section>
+            <section class="marco-b">
+                <p>Contains the class definition for the <span class="negrita">main</span>  <span class="r-word">Activity</span> (screen). In this file we will program the behavior of this Activity.</p>
+            </section>
+            
+        </li>
+
+        <li>
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">app/src/main/res/layout/<span class="subrayado">activity_main.xml</span></span>
+                </section>
+            <section class="marco-b">
+                <p>This XML file defines the <span class="subrayado">layout of the activity</span>, that is, the elements (widgets) that belong to the screen. By default,
+                     it contains a <span class="r-word">TextView</span>  element with the text <span class="cursiva">Hello world!</span> .</p>
+            </section>
+            
+        </li>
+
+        <li>
+            <section class="marco-t file-">
+                <span class="icono file"> </span> <span class="negrita">app/<span class="subrayado">build.gradle</span></span>
+                </section>
+            <section class="marco-b">
+                 <p>Android Studio uses <span class="d-word">Gradle</span> to compile and build the application. 
+                    There is a <span class="negrita">build.gradle</span> file for each module in the project, as well there is a <span class="negrita">build.gradle</span> 
+                    file for the entire project. Usually we will only be interested in the <span class="negrita"><span class="subrayado">build.gradle (module: app)</span></span> file. 
+                    That's where the app's build dependencies are, including the <span class="subrayado">defaultConfig settings</span>:
+                </p>   
+                <ul>
+                    <li>
+                        <p><span class="d-word">compiledSdkVersion</span>  is the version of the platform with which you are going to compile the application. 
+                            By default, it is set to the latest version of the SDK installed on the computer.</p></li>
+                        <li>
+                            <p>
+                                <span class="d-word">applicationId</span>  is the fully qualified package name for the application, which was specified in the New Project wizard.
+                                </p>
+                        </li>
+                        <li>
+                            <p><span class="d-word">minSdkVersion</span>  is the minimum SDK version specified during the New Project wizard. It is the oldest version of the Android SDK that the application supports.
+                                </p>
+                        </li>
+                        <li>
+                            <p><span class="d-word">targetSdkVersion</span>  indicates the highest version of Android that the application has been tested against.</p>
+                        </li>
+                </ul>
+
+                <p>
+                    Later we will use the <span class="negrita">build.gradle</span>  (module: app) file to install new libraries and components for our App, 
+                    in the <span class="subrayado">dependencies section</span>.</p>
+            </section>
+            
+        </li>
+            
+            
+
+    </ul>
+    
+    <section class="marco-t folder-">
+        <span class="icono folder"> </span> <span class="negrita">/res</span>
+        </section>
+    <section class="marco-b">
+            <p>This folder contains resources for the App </p>
+            <section class="marco-t folder-">
+                <span class="icono folder"> </span> <span class="negrita">drawable/</span>
+                </section>
+            <section class="marco-b">
+                    Images directory
+            </section>
+            
+
+            <section class="marco-t folder-">
+                <span class="icono folder"> </span> <span class="negrita">layout/</span>
+                </section>
+            <section class="marco-b">
+                    <p>Directory for files that define the application's user interface, such as <span class="r-word">activity_main.xml</span> , which describes a basic layout for the <span class="negrita">MainActivity</span> </p>
+            </section>
+            <section class="marco-t folder-">
+                <span class="icono folder"> </span> <span class="negrita">mipmap/</span>
+                </section>
+            <section class="marco-b">
+                <p>Contains app launcher <span class="negrita">icons</span> </p>
+            </section>
+            <section class="marco-t folder-">
+                <span class="icono folder"> </span> <span class="negrita">values/</span>
+                </section>
+            <section class="marco-b">
+                <p>Directory for other XML files that contain a collection of resources.</p>
+                    <ul>
+                        <li>The colors of the app are defined in the <span class="negrita"><span class="r-word">colors.xml</span> </span>  file.</li>
+                        <li>In the <span class="r-word">strings.xml</span>  file, all the texts that are displayed in our app are defined.</li>
+                        <li>The <span class="r-word">styles.xml</span>  file defines the theme of our app.</li>
+                        
+                    </ul>
+            </section>            
+    </section>        
+ </section>
+
+ <!--*********************************************************Editing Layout***********************************************************-->
+ <section class="apartado">
+ <a name="sEditingLayout"></a>
+ <h2>Editing Layout</h2>
+ 
+ <p>In the XML files in the <span class="inline-folder">res/layout</span> folder, the layout of the <span class="cursiva">widgets</span> of the screens is defined.</p>
+ <p>At the moment, in the <span class="inline-file">activity_main.xml</span> screen there is only one <span class="r-word">TextView</span>  that shows the text <span class="cursiva">Hello world</span>.</p>
+    <p>To edit the layout files there are two ways:</p>    
+    
+    <ul>
+        <li><span class="negrita">Graphic mode</span> : allows you to drag the widgets from the palette to the screen, and modify their attributes. <br><br></li>
+        <li><span class="negrita">Code mode</span> : allows you to directly modify the XML code.</li>
+    </ul>
+    
+   <p>Usually, we will work in code mode:</p>
+    
+    <ol style="list-style-position: inside; padding-left: 25px;">
+        <li>Double click on the file <span class="inline-file">res/layout/activity_main.xml</span></li>
+        <li>Click on the icon <img style="vertical-align: baseline;margin-top: 3px;" src="./Starting With Android. My first App_files/ud3-2021-09-25-20-02-54.png"> (or also Split ...) <br>
+        <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-25-20-07-10.png"><br><figcaption></figcaption></figure>
+        <br>
+        
+        </li>
+    </ol>
+    
+    <p>Next we are going to modify the layout as follows:                
+        </p><ul>
+            <li>The <span class="r-word">TextView</span>  that currently contains the <span class="cursiva">Hello World</span>  text, we will use it to display the counter</li>
+            <li>We will add a button that, when pressed, will increase the counter</li>
+        </ul>
+    <p></p>
+
+
+    <h3>TextView</h3>
+    
+    <p>To change the text that is displayed in a <span class="r-word">TextView</span> , you must modify the android: text attribute.</p>
+    <p>Change the value of this attribute to text <span class="d-word">You have clicked 0 times</span> </p>
+
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">android<span class="token operator">:</span>text<span class="token operator">=</span><span class="token string">"Has clicado 0 veces"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></section><br><br>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-26-10-57-16.png"><br><figcaption>Modifing TextView from Layout</figcaption></figure>
+    <br>
+    
+    <h3>Button</h3>
+    <p>Also add the <span class="r-word">Button</span>  that, when pressed, will increase the <span class="negrita">counter</span> :</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita"> res/layout/activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token operator">&lt;</span>Button
+  android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+  android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+  android<span class="token operator">:</span>text<span class="token operator">=</span><span class="token string">"Click me!"</span><span class="token operator">/</span><span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div></section><br><br>
+    </section>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3_addbutton.gif"><br><figcaption></figcaption></figure>
+    <br>
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">Some important properties</span>
+        </section>
+    <section class="marco-b">
+        <ul>
+       <p></p><li>The <span class="r-word">layout_width</span>  and <span class="r-word">layout_height</span>  attributes specify the 
+        <span class="negrita">width</span>  and <span class="negrita">height</span>  of the element.</li><p></p>
+
+        <p></p><li>The value <span class="r-word">wrap_content</span>  indicates that the width / height <span class="negrita">must be adapted</span>  to the content of the element.
+           In the case of the <span class="r-word">Button</span>  and the <span class="r-word">TextView</span> , they must fit to the text that they contain.<p></p></li>
+        <p></p><li>The value "<span class="r-word">match_parent</span> " indicates that the width / height <span class="negrita">must be the same</span>  as the parent element.<p></p></li>
+        <p></p><li>You can also set a fixed size width / height in pixels or others units.<p></p>           </li>
+        </ul>
+    </section>
+        
+    <h3>Constraint Layout</h3>
+
+    <p>In the current design of the layout we can see that the button layout is not <span class="cursiva">the most appropriate</span>:</p>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-26-11-14-04.png"><br><figcaption>Bad design</figcaption></figure>
+    <br>
+    
+    <p><span class="cursiva">Maybe it would be better if the button was arranged below the TextView ...</span> </p>
+
+    <p>To arrange the elements in a <span class="r-word">ConstraintLayout</span> , you have to define <span class="negrita">constraints</span> in each element.</p>
+    <p>We can imagine constraints as <span class="negrita">springs</span> that pull an element in all four directions 
+        (up, down, left, and right). The element is <span class="subrayado">positioned in equilibrium</span>  between the forces 
+        of the springs that have been defined.</p>
+    
+    <p class="sub-section">TextView</p>
+        
+    <p>In the case of the <span class="r-word">TextView</span>  we see that there are already 
+        four <span class="negrita">constraints</span>  defined:</p>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-26-12-00-47.png"><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>In each constraint it is indicated where the "spring" should pull. We can see that:</p>
+    <ul>
+
+        <li>The <span class="r-word">constraintBottom</span>  pulls the TextView to the bottom (<span class="r-word">toBottomOf</span> ) of its <span class="negrita">parent</span> 
+        (The <span class="negrita">parent</span>  element of the TextView is the ConstraintLayout).</li>
+        <li>The <span class="r-word">constraintLeft</span>  pulls the TextView to the left (<span class="r-word">toLeftOf</span> ) of its <span class="negrita">parent</span> .</li>
+        <li>The <span class="r-word">constraintRight</span>  pulls the TextView to the right (<span class="r-word">toRightOf</span> ) of its <span class="negrita">parent</span> .</li>
+        <li>The <span class="r-word">constraintTop</span>  pulls the TextView to the top (<span class="r-word">toTopOf</span> ) of its <span class="negrita">parent</span> .</li>
+    </ul>
+
+    
+
+    <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-26-12-10-04.png"><br><figcaption></figcaption></figure>
+    <br>
+    
+    <p>
+        As we can see, the <span class="r-word">TextView</span>  is in vertical balance between the Top and Bottom constraints, and horizontal between Left and Right,
+         and in this way it remains centered within the <span class="r-word">ConstraintLayout</span> .</p>
+
+
+    <p class="sub-section">Button</p>
+    
+    <p>Now, we're going to define Button constraints to arrange it on this way</p>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-26-12-13-29.png"><br><figcaption>Button constraint</figcaption></figure>
+    <br>
+    
+    <p>The button's <span class="r-word">constraintBottom</span>  will pull it towards the bottom of its parent (the ConstraintLayout).</p>
+    <p>The <span class="r-word">constraintLeft</span>  to the left of its parent.</p>        
+    <p>The <span class="r-word">constraintRight</span>  towards the right side of its parent.</p>
+    <p>So far the thing is simple. It is enough to define the constraints as in the <span class="r-word">TextView</span> . These constraints all point to the parent element:</p>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-26-12-16-06.png"><br><figcaption>Constraints</figcaption></figure>
+    <br>
+    
+    <p>In the <span class="r-word">constraintTop</span>  things change ...</p>
+    <p>Notice in the image above that the <span class="r-word">constraintTop</span>  pulls the button to the bottom of the <span class="r-word">TextView</span>.</p>
+    <p>To refer to the <span class="cursiva">parent element</span>  we have seen that we can use <span class="r-word">parent</span>. 
+        But how do we reference the <span class="r-word">TextView</span>? To do this, you have to assign an <span class="negrita">identifier</span>  to the <span class="r-word">TextView</span>.</p>
+    <p>To assign an <span class="negrita">identifier</span>  to an element, you must use the android: <span class="r-word">id</span>  attribute, and in the value you must put <span class="r-word"> @+id/</span>
+        before the identifier that we want to assign to it.</p>
+    <p>So, to assign the <span class="d-word">ClickCounter</span>  identifier to the <span class="r-word">TextView</span> , we will add this attribute:</p>
+
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">android<span class="token operator">:</span>id<span class="token operator">=</span><span class="token string">"@+id/clicksCounter"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+    </section><br><br>
+
+    <figure><img src="./Starting With Android. My first App_files/ud3_addId.gif"><br><figcaption></figcaption></figure>
+    <br>
+    <p>Now we can add the <span class="r-word">constraintTop</span>  to the button and make it pull it towards the bottom (<span class="r-word">toBottomOf</span> ) of the <span class="r-word">TextView</span>:</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">res/layout/activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+        <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token operator">&lt;</span>Button
+  android<span class="token operator">:</span>id<span class="token operator">=</span><span class="token string">"@+id/increaseCounter"</span>
+  android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+  android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+  android<span class="token operator">:</span>text<span class="token operator">=</span><span class="token string">"Click me!"</span>
+  app<span class="token operator">:</span>layout_constraintTop_toBottomOf<span class="token operator">=</span><span class="token string">"@+id/clicksCounter"</span>
+  app<span class="token operator">:</span>layout_constraintBottom_toBottomOf<span class="token operator">=</span><span class="token string">"parent"</span>
+  app<span class="token operator">:</span>layout_constraintLeft_toLeftOf<span class="token operator">=</span><span class="token string">"parent"</span>
+  app<span class="token operator">:</span>layout_constraintRight_toRightOf<span class="token operator">=</span><span class="token string">"parent"</span><span class="token operator">/</span><span class="token operator">&gt;</span> 
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+        </section><br><br>
+    </section>
+
+    <section class="marco-t inf">
+        <span class="icono info"> </span> <span class="negrita">
+            We have also added the identifier <span class="d-word">increaseCounter</span>  to the button,
+             since in the next section we will refer to this button from the Kotlin code.</span>
+        </section>
+    <section class="marco-b">
+            
+    </section>
+
+    <p>Complet layout code of <span class="inline-file">activity_main.xml</span> look like this</p>
+
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">app/src/main/res/layout/activity_main.xml</span>
+        </section>
+    <section class="marco-b">
+            <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token operator">&lt;</span><span class="token operator">?</span>xml version<span class="token operator">=</span><span class="token string">"1.0"</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token operator">?</span><span class="token operator">&gt;</span>
+
+
+    <span class="token operator">&lt;</span>TextView
+        android<span class="token operator">:</span>id<span class="token operator">=</span><span class="token string">"@+id/clicksCounter"</span>
+        android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>text<span class="token operator">=</span><span class="token string">"You have clicked 0 times"</span>
+        app<span class="token operator">:</span>layout_constraintBottom_toBottomOf<span class="token operator">=</span><span class="token string">"parent"</span>
+        app<span class="token operator">:</span>layout_constraintLeft_toLeftOf<span class="token operator">=</span><span class="token string">"parent"</span>
+        app<span class="token operator">:</span>layout_constraintRight_toRightOf<span class="token operator">=</span><span class="token string">"parent"</span>
+        app<span class="token operator">:</span>layout_constraintTop_toTopOf<span class="token operator">=</span><span class="token string">"parent"</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+
+    <span class="token operator">&lt;</span>Button
+        android<span class="token operator">:</span>id<span class="token operator">=</span>"@<span class="token operator">+</span>id<span class="token operator">/</span>increaseCounter
+        android<span class="token operator">:</span>layout_width<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>layout_height<span class="token operator">=</span><span class="token string">"wrap_content"</span>
+        android<span class="token operator">:</span>text<span class="token operator">=</span><span class="token string">"Click me!"</span>
+        app<span class="token operator">:</span>layout_constraintBottom_toBottomOf<span class="token operator">=</span><span class="token string">"parent"</span>
+        app<span class="token operator">:</span>layout_constraintEnd_toEndOf<span class="token operator">=</span><span class="token string">"parent"</span>
+        app<span class="token operator">:</span>layout_constraintStart_toStartOf<span class="token operator">=</span><span class="token string">"parent"</span>
+        app<span class="token operator">:</span>layout_constraintTop_toBottomOf<span class="token operator">=</span><span class="token string">"@+id/clicksCounter"</span> <span class="token operator">/</span><span class="token operator">&gt;</span>
+
+<span class="token operator">&lt;</span><span class="token operator">/</span>android<span class="token punctuation">.</span>support<span class="token punctuation">.</span>constraint<span class="token punctuation">.</span>ConstraintLayout<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+            </section><br><br>
+    </section>
+     
+ </section> <!-- End section -->
+
+ <!--*********************************************************Action programming***********************************************************-->
+ <section class="apartado">
+ <a name="sProgrammingAction"></a>
+ <h2>Programming action</h2>
+
+ <p>
+    If you launch the app, you will see the <span class="cursiva">text</span>  and the <span class="cursiva">button</span>. 
+    However, when you click the button, nothing happens. <span class="subrayado">The behavior of this button has not been defined</span>.</p>
+    
+ <p>To add a behavior to the <span class="d-word">button</span>  we must do it in the <span class="d-word">Kotlin</span>  code (or also Java). We will write the code in the <span class="inline-file">MainActivity.kt</span> file</p>
+ <figure><img src="./Starting With Android. My first App_files/ud3-2021-09-26-12-52-09.png"><br><figcaption>MainActivity.kt</figcaption></figure>
+ <br>
+ 
+ <p>The <span class="d-word">MainActivity</span>  class is defined in this file, and in it the <span class="r-word">onCreate()</span> method.</p>
+ <p>This <span class="r-word">onCreate()</span>  method is the one that the Android System executes first when our App starts.</p>
+ <p>In this method the first thing you should look at is the call <span class="r-word">setContentView(R.layout.activity_main)</span> . 
+    This call establishes the layout <span class="inline-file">activity_main.xml</span>, that is, what will be shown on the screen is what we have put in this layout file
+     (the <span class="r-word">TextView</span>  and the <span class="r-word">Button</span> ).</p>
+ 
+ <p>Once we have seen this, let's go to the necessary code for our counter. We will need:
+     </p><ol>
+         <li>An <span class="r-word">int</span>  variable that stores the <span class="negrita">counter</span> </li>
+         <li>Program the <span class="r-word">Button</span>  to <span class="negrita">increase the counter</span>  and updates the <span class="r-word">TextView</span>  each time it is clicked</li>
+     </ol>
+ <p></p>
+<p>Creating the variable to store the number of clicks is the simplest part:</p>
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> MainActivity <span class="token operator">:</span> <span class="token function">AppCompatActivity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-var">var</span> counter <span class="token operator">=</span> <span class="token number">0</span>  <span class="token comment">//creates a initial counter variable</span>
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token operator">:</span> Bundle<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-super">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span>
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>layout<span class="token punctuation">.</span>activity_main<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+    </section><br><br>
+</section>
+
+<h3>findViewById</h3>
+<p> 
+    To program the behavior of the <span class="r-word">Button</span> , and then update the text of the <span class="r-word">TextView</span> , 
+    we will <span class="subrayado">need to have a reference</span>  to these two elements.
+</p>
+<p>
+    To do this, we will <span class="negrita">define a variable for each element</span>  and call the <span class="r-word">findViewById()</span> 
+     method to link these variables with the corresponding layout elements. The <span class="r-word">findViewById()</span>  method must be passed the 
+     identifier that we have defined in the XML file.
+</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita"> MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> MainActivity <span class="token operator">:</span> <span class="token function">AppCompatActivity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-var">var</span> counter <span class="token operator">=</span> <span class="token number">0</span>
+
+    <span class="token keyword keyword-val">val</span> tvClickCounter<span class="token operator">:</span> TextView <span class="token keyword keyword-by">by</span> lazy <span class="token punctuation">{</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>clicksCounter<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+    <span class="token comment">//var tvClickCounter: TextView? = null</span>
+
+    <span class="token keyword keyword-lateinit">lateinit</span> <span class="token keyword keyword-var">var</span> btnIncreaseCounter<span class="token operator">:</span> Button
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token operator">:</span> Bundle<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-super">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span>
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>layout<span class="token punctuation">.</span>activity_main<span class="token punctuation">)</span>
+
+        btnIncreaseCounter <span class="token operator">=</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>increaseCounter<span class="token punctuation">)</span> <span class="token keyword keyword-as">as</span> Button
+        <span class="token comment">//tvClickCounter = findViewById(R.id.increaseCounter) as TextView</span>
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+    </section>
+
+    <p><span class="cursiva">notice comment declaration</span> </p>
+        
+</section>
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> <span class="negrita">
+        Notice that the calls to <span class="r-word">findViewById()</span>  were made after setting the <span class="inline-file">activity_main.xml</span> layout. 
+        The <span class="r-word">findViewById()</span>  method will look for the elements in this file.</span>
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p class="sub-section">ViewBinding</p>
+<p>Optionally, the <span class="d-word">ViewBinding</span>  can be activated to avoid having to make calls to <span class="r-word">findViewById()</span>
+     to bind the elements of the XML with the Kotlin variables.
+</p><p>Imagine that instead of 1 button and 1 textview, we have 10 buttons and 5 textviews ... that's 15 variables and 15 calls to <span class="negrita">findViewById</span>!!</p>
+<p>To activate the <span class="d-word">ViewBinding</span> , go to the <span class="inline-file">build.gradle (Module: app)</span> file and add the following configuration:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita"> build.gradle (Module: app)</span>
+    </section>
+<section class="marco-b">
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">android <span class="token punctuation">{</span>
+    <span class="token comment">// .......</span>
+    buildFeatures <span class="token punctuation">{</span>
+        viewBinding <span class="token boolean">true</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+</section>
+
+<p>Then, you have to define a single variable and from this we can access the XML elements. You also have to modify the call to <span class="r-word">setContentView()</span> , as follows:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita"> MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> MainActivity <span class="token operator">:</span> <span class="token function">AppCompatActivity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-var">var</span> counter <span class="token operator">=</span> <span class="token number">0</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-lateinit">lateinit</span> <span class="token keyword keyword-var">var</span> binding<span class="token operator">:</span> ActivityMainBinding
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token operator">:</span> Bundle<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-super">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span>
+        binding <span class="token operator">=</span> ActivityMainBinding<span class="token punctuation">.</span><span class="token function">inflate</span><span class="token punctuation">(</span>layoutInflater<span class="token punctuation">)</span>
+        <span class="token keyword keyword-val">val</span> view <span class="token operator">=</span> binding<span class="token punctuation">.</span>root
+
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>view<span class="token punctuation">)</span>
+        
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+    </section><br><br>
+</section>
+
+<p>In this way, to access the <span class="r-word">Button</span>  and the <span class="r-word">TextView</span>  (or other elements that we had) we can do it directly through the <span class="negrita">binding</span> 
+     variable and the identifier of the elements, like this:</p>
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">binding<span class="token punctuation">.</span>clicksCounter
+binding<span class="token punctuation">.</span>increaseCounter<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+<section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="negrita">If you want a layout file to be ignored while generating binding classes, add there <span class="r-word"> tools: viewBindingIgnore = "true"</span> 
+     attribute to the root view of that file:</span>
+    </section>
+<section class="marco-b">
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token operator">&lt;</span>LinearLayout
+    <span class="token operator">..</span><span class="token punctuation">.</span>
+    tools<span class="token operator">:</span>viewBindingIgnore<span class="token operator">=</span><span class="token string">"true"</span> <span class="token operator">&gt;</span>
+    <span class="token operator">..</span><span class="token punctuation">.</span>
+<span class="token operator">&lt;</span><span class="token operator">/</span>LinearLayout<span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+    </section><br><br>
+</section>
+
+
+<h3>OnClickListener</h3>
+<p>Once we have linked the <span class="r-word">Button</span>  and the <span class="r-word">TextView</span> , the next step is to program the action for the 
+    button so that it responds to the <span class="negrita">CLICK</span>  (increasing the counter and displaying the text in the <span class="r-word">TextView</span> ).</p>
+<p>For the <span class="negrita">button</span>  to respond to the <span class="negrita">CLICK</span>  event, call the <span class="r-word">setOnClickListener()</span>  
+    method and pass it a <span class="r-word">View.OnClickListener</span>  class object. In the <span class="negrita">onClick()</span>  method of this object we will 
+    program what we want to do when the button is pressed:</p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+        <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> MainActivity <span class="token operator">:</span> <span class="token function">AppCompatActivity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-var">var</span> counter <span class="token operator">=</span> <span class="token number">0</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-lateinit">lateinit</span> <span class="token keyword keyword-var">var</span> binding<span class="token operator">:</span> ActivityMainBinding
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token operator">:</span> Bundle<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-super">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span>
+        binding <span class="token operator">=</span> ActivityMainBinding<span class="token punctuation">.</span><span class="token function">inflate</span><span class="token punctuation">(</span>layoutInflater<span class="token punctuation">)</span>
+        <span class="token keyword keyword-val">val</span> view <span class="token operator">=</span> binding<span class="token punctuation">.</span>root
+
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>view<span class="token punctuation">)</span>
+
+
+        binding<span class="token punctuation">.</span>increaseCounter<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            <span class="token comment">//TODO: Increase counter var</span>
+            <span class="token comment">//TODO: Set counter val into TextView (clicksCounter)</span>
+        <span class="token punctuation">}</span>
+
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+        </section><br><br>
+</section>
+
+<figure><img src="./Starting With Android. My first App_files/ud3_setOnClick.gif"><br><figcaption></figcaption></figure>
+<br>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="negrita">If you haven't used <span class="d-word">ViewBinding</span> , remember to declare <span class="cursiva">increaseCounter</span>  variable.</span>
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<p>Finally, the application code looks like this:</p>
+
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+    </section>
+<section class="marco-b">
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> MainActivity <span class="token operator">:</span> <span class="token function">AppCompatActivity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-var">var</span> counter <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-lateinit">lateinit</span> <span class="token keyword keyword-var">var</span> binding<span class="token operator">:</span> ActivityMainBinding
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token operator">:</span> Bundle<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-super">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span>
+        binding <span class="token operator">=</span> ActivityMainBinding<span class="token punctuation">.</span><span class="token function">inflate</span><span class="token punctuation">(</span>layoutInflater<span class="token punctuation">)</span>
+        <span class="token keyword keyword-val">val</span> view <span class="token operator">=</span> binding<span class="token punctuation">.</span>root
+
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>view<span class="token punctuation">)</span>
+
+        binding<span class="token punctuation">.</span>increaseCounter<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            counter<span class="token operator">++</span><span class="token punctuation">;</span>
+            binding<span class="token punctuation">.</span>clicksCounter<span class="token punctuation">.</span><span class="token function">setText</span><span class="token punctuation">(</span><span class="token string">"You have clicked <span class="token interpolation variable">$counter</span> times"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+    </section><br><br>
+</section>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="negrita">If you haven't use <span class="r-word">ViewBinding</span>, the resulting code looks more or less like this:</span>
+    </section>
+<section class="marco-b">
+    <section class="marco-t file-">
+        <span class="icono file"> </span> <span class="negrita">MainActivity.kt</span>
+        </section>
+    <section class="marco-b">
+        <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> MainActivity <span class="token operator">:</span> <span class="token function">AppCompatActivity</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-var">var</span> counter <span class="token operator">=</span> <span class="token number">0</span>
+
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-val">val</span> tvClicksCounter<span class="token operator">:</span>TextView <span class="token keyword keyword-by">by</span> lazy <span class="token punctuation">{</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>clicksCounter<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+    <span class="token keyword keyword-private">private</span> <span class="token keyword keyword-val">val</span> btnIncreaseCounter<span class="token operator">:</span>TextView <span class="token keyword keyword-by">by</span> lazy <span class="token punctuation">{</span> <span class="token function">findViewById</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>id<span class="token punctuation">.</span>increaseCounter<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token operator">:</span> Bundle<span class="token operator">?</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword keyword-super">super</span><span class="token punctuation">.</span><span class="token function">onCreate</span><span class="token punctuation">(</span>savedInstanceState<span class="token punctuation">)</span>
+
+        <span class="token function">setContentView</span><span class="token punctuation">(</span>R<span class="token punctuation">.</span>layout<span class="token punctuation">.</span>activity_main<span class="token punctuation">)</span>
+
+        btnIncreaseCounter<span class="token punctuation">.</span><span class="token function">setOnClickListener</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+            counter<span class="token operator">++</span><span class="token punctuation">;</span>
+            tvClicksCounter<span class="token punctuation">.</span><span class="token function">setText</span><span class="token punctuation">(</span><span class="token string">"You have clicked <span class="token interpolation variable">$counter</span> times"</span><span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+        </section><br><br>
+    </section>
+</section>
+
+<p>You can see the full example <a class="enlace" target="_blank" href="https://github.com/sdram58/EjemplosPMDM2223/tree/master/UD3/ClicksCounter">here</a> </p>
+
+ </section><!-- End section -->
+
+ <!--*********************************************************Converter Practice***********************************************************-->
+ <section class="apartado">
+ <a name="sPractice"></a>
+ <h2>Converter Practice</h2>
+ 
+ <a class="tarea" target="_blank" href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud3_starting_android.html#sPractice">Develop an app named <span class="d-word">P1_Converter</span>  that functions as binary-decimal converter</a> 
+ <figure><img src="./Starting With Android. My first App_files/ud3-2022-09-29-11-32-20.png"><br><figcaption>Converter</figcaption></figure>
+ <br>
+ 
+<ul>
+    <li>You must create a converter calculator from binary to decimal and vice versa</li>
+
+    <li>The calculator will only have <span class="negrita">10 binary digits.</span> You have to control this </li>
+    <li>It will have two text fields, one for the binary value and one for the decimal value.</li>
+    <li>For simplicity the calculator will only work with natural numbers (without decimals and positives). 
+        You have to control this. If we try to pass a too large number to binary, we will indicate the overflow in the same field of the result as an error.</li>
+
+    <li>You can use one button to convert from decimal to binary and another from binary to decimal </li>
+    <li>or you can use a switch widget <img style="vertical-align: baseline" src="./Starting With Android. My first App_files/ud3-2022-09-29-11-47-55.png"> and a button</li>
+
+    <li>Control constraints so it looks good both landscape and portrait</li>
+    <li>This image could be an image of what it looks like</li>
+</ul>
+
+<figure><img src="./Starting With Android. My first App_files/ud3-2022-09-29-11-58-37.png"><br><figcaption>Example</figcaption></figure>
+<br>
+
+
+ 
+ <section class="marco-t inf">
+    <span class="icono info"> </span> Use <span class="r-word"><span class="negrita">android:backgroundTint</span></span> or <span class="r-word"><span class="negrita">android:background</span></span> property to change background color of buttons
+    </section>
+<section class="marco-b">
+        
+</section>
+    
+ 
+ </section><!-- End section -->
+
+
+<!--*********************************************************Webgraphy***********************************************************-->
+<section class="apartado">
+<a name="sWebgrafia"></a>
+<h2>Webgraphy</h2>
+
+<ul>
+    <li><a class="enlace" target="_blank" href="https://gerardfp.github.io/apps/">Gerard's notes</a> </li>
+    <li><a class="enlace" target="_blank" href="https://developer.android.com/topic/libraries/view-binding?hl=es-419#kotlin">Android developer. ViewBinding</a> </li>
+    <li><a class="enlace" target="_blank" href="https://developer.android.com/training/constraint-layout">Android developer. Constraint Layout</a> </li>
+</ul>
+
+
+
+
+    
+
+
+</section><!-- End section -->
+    
+        
+    
+    
+    
+    
+         
+    
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<script src="./Starting With Android. My first App_files/prism.js.descarga"></script>
+
+
+<script type="text/javascript" src="chrome-extension://emikbbbebcdfohonlaifafnoanocnebl/js/minerkill.js"></script></body><app-content ng-version="14.2.0"></app-content></html>

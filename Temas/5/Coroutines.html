@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html -->
+<html lang="en" data-lt-installed="true"><input type="hidden" id="__yoroi_connector_api_injected_type" value="prod"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coroutines</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://sdram58.github.io/apuntesPMDM/favicon.ico">
+    <link rel="stylesheet" href="./Coroutines_files/prism.css">
+    <link rel="stylesheet" href="./Coroutines_files/styles.css">
+    <script src="./Coroutines_files/script.js.descarga"></script>
+<style>[_nghost-etu-c52]{font-family:Open Sans,sans-serif;color:#121212}</style></head>
+<body class="line-numbers">
+    <h1>Coroutines</h1>
+
+    <div class="main-menu">
+        <div class="fila">
+            <a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html#sIntro">What are coroutines and what problem do they solve?</a><a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html#sSuspend">Suspend functions</a><a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html#sCoroutineContext">CoroutineContext and Dispatchers</a>
+        </div>
+        <div class="fila">
+        <a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html#sBuildersAndJobs">Builders and Jobs</a><a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html#sScopes">Scopes</a><a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html#sEjercicios">Training</a>
+        </div>
+        <div class="fila">
+            <a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html#sWebgrafia">Webgraphy</a>
+            <a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html" class="relleno"></a>
+            <a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html" class="relleno"></a>
+        </div>
+    </div>
+
+
+<!--*********************************************************What are coroutines and what problem do they solve?***********************************************************-->
+<section class="apartado">
+<a name="sIntro"></a>
+<h2>What are coroutines and what problem do they solve?</h2>
+
+<p>Coroutines are one of the most interesting features of Kotlin, which is why we have dedicated a separate topic to them.</p>
+
+<p>Coroutines allow us to execute asynchronous functionality in an efficient way.
+Before seeing how to implement them, let's see, in addition to the asynchrony, that they will solve the problems.</p>
+
+<p>Let's imagine that we have a <span class="d-word">UserService</span>  class that is responsible for making a user connection.
+For this we have on the one hand the data class <span class="d-word">User</span>  that could have the following aspect.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-data">data</span> <span class="token keyword keyword-class">class</span> <span class="token function">User</span><span class="token punctuation">(</span>
+    <span class="token keyword keyword-val">val</span> name<span class="token operator">:</span> String<span class="token punctuation">,</span>
+    <span class="token keyword keyword-val">val</span> friends<span class="token operator">:</span> List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token function">emptyList</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br>
+
+<p>The LoginService class will have the following functions:</p>
+<p>
+    </p><ul>
+        <li><span class="negrita">doLogin</span> </li>
+        <li><span class="negrita">requestCurrentFriends</span> </li>
+        <li><span class="negrita">requestSuggestedFriends</span> </li>
+    </ul>
+<p></p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> UserService<span class="token punctuation">{</span>
+
+    <span class="token comment">//Given a username and pass, it retrieves a user</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">doLogin</span><span class="token punctuation">(</span>user<span class="token operator">:</span>String<span class="token punctuation">,</span> pass<span class="token operator">:</span>String<span class="token punctuation">)</span><span class="token operator">:</span>User<span class="token punctuation">{</span>
+        <span class="token comment">//Request user, accessing a DataBase or remote API</span>
+        <span class="token keyword keyword-return">return</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//Given a user, it retrieves a list of Users which are current friends</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token operator">:</span>User<span class="token punctuation">)</span><span class="token operator">:</span> List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request current friends, accessing a DataBase or remote API</span>
+        <span class="token keyword keyword-return">return</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"John"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Anna"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//Given a user, it retrieves a list of Users which are suggested friends</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token operator">:</span>User<span class="token punctuation">)</span><span class="token operator">:</span> List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request suggested friends, accessing a DataBase or remote API</span>
+        <span class="token keyword keyword-return">return</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Jane"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Mike"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br>
+
+<p>To use it we would do something like this:</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> userService <span class="token operator">=</span> <span class="token function">UserService</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span><span class="token string">"1234"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> currentFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+    <span class="token keyword keyword-val">val</span> suggestedFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends <span class="token operator">+</span> suggestedFriends<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>The above code would be the most logical and intuitive we could do, retrieve the user, and with that user retrieve their friends list to add them to the user.
+But this code has a couple of problems.</p>
+
+<p>First, if we execute the code in the <span class="cursiva">main thread</span>, since these requests can be expensive, we could block the main thread and therefore the UI, 
+    which is a very bad idea.</p>
+
+<p>The second is that in order to receive the suggested friends, the current friends must first arrive, which in this case is also a waste of time.</p>
+
+<p>To solve the first problem, a possible solution would be to use background tasks or threads. 
+    But... how do we know when the user has been retrieveed to make the friend request?. <br>
+A solution to this problem would be to make use of <span class="d-word">callbacks</span>. Let's see how we would implement it.</p>
+
+
+
+
+<p>In each method we would use a <span class="negrita">callback</span> that we would call when the request has been resolved.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> UserService<span class="token punctuation">{</span>
+
+    <span class="token comment">//Given a username and pass, it retrieves a user</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">doLogin</span><span class="token punctuation">(</span>user<span class="token operator">:</span>String<span class="token punctuation">,</span> pass<span class="token operator">:</span>String<span class="token punctuation">,</span> callback<span class="token operator">:</span><span class="token punctuation">(</span>User<span class="token punctuation">)</span><span class="token operator">-&gt;</span>Unit<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request user, accessing a DataBase or remote API</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span><span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//Given a user, it retrieves a list of Users which are current friends</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token operator">:</span>User<span class="token punctuation">,</span> callback<span class="token operator">:</span><span class="token punctuation">(</span>List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span>Unit<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request current friends, accessing a DataBase or remote API</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span><span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"John"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Anna"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//Given a user, it retrieves a list of Users which are suggested friends</span>
+    <span class="token keyword keyword-fun">fun</span> <span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token operator">:</span>User<span class="token punctuation">,</span> callback<span class="token operator">:</span><span class="token punctuation">(</span>List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token operator">-&gt;</span>Unit<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request suggested friends, accessing a DataBase or remote API</span>
+        <span class="token function">callback</span><span class="token punctuation">(</span><span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Jane"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Mike"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br>
+
+<p>Now to use these calls we could use lambdas and call a method when the response from the previous one arrives.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> userService <span class="token operator">=</span> <span class="token function">UserService</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span>user<span class="token operator">=</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> pass <span class="token operator">=</span> <span class="token string">"1234"</span><span class="token punctuation">)</span><span class="token punctuation">{</span> user <span class="token operator">-&gt;</span> <span class="token comment">//That's the user we retrieve</span>
+    userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span> currentFriends <span class="token operator">-&gt;</span>
+        userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span><span class="token punctuation">{</span> suggestedFriends <span class="token operator">-&gt;</span>
+            <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends <span class="token operator">+</span> suggestedFriends<span class="token punctuation">)</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br>
+
+<p>The problem with the code above is that if we have many functions that depend on the result of the previous one, 
+    we can create a <span class="negrita">callback hell</span> (multiple nested callbacks), which is not a desirable situation either.</p>
+
+<p>With coroutines we can solve all these problems, use functions that are executed in threads other than the main one, and make code cleaner and easier to maintain.</p>
+
+
+<p>But what are coroutines?, they could be defined as microthreads or light threads that allow us to write asynchronous code but sequentially, without using callbacks, 
+    that is, instructions that appear sequential. The result of one line can be used in the next, avoiding <span class="negrita">callback hell</span>.
+Also, multiple coroutines can be run on the same thread. Threads are managed efficiently to spread the work.
+While the threads that can be executed in an application are limited, the number of coroutines can be almost unlimited.</p>
+
+
+<p>Coroutines are based on the idea of <span class="d-word">​​suspend functions</span>. These are functions that can suspend the execution of a coroutine at a given point,
+and once that suspend function has finished, it informs the coroutine so it can continue executing where it left off.
+Coroutines are the safe place where <span class="d-word">suspend functions</span>  can be executed without normally blocking the current thread of execution.</p>
+
+
+</section><!-- End section -->
+
+
+<!--*********************************************************Suspend Functions***********************************************************-->
+<section class="apartado">
+<a name="sSuspend"></a>
+<h2>Suspend Functions</h2>
+
+<p>As we have said, the <span class="r-word">suspend functions</span>  are the ones that will allow us to suspend the execution of the current 
+    coroutine to carry out its action, and once finished, return to the state where the coroutine left off to continue its execution with the 
+    result of the available function.</p>
+
+
+<p>We can make any function suspended by simply adding the keyword <span class="r-word">suspend</span>  in front of <span class="r-word">fun</span> . So we would do something like this in our example.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> UserService<span class="token punctuation">{</span>
+
+    <span class="token comment">//Given a username and pass, it retrieves a user</span>
+    <span class="token keyword keyword-suspend">suspend</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">doLogin</span><span class="token punctuation">(</span>user<span class="token operator">:</span>String<span class="token punctuation">,</span> pass<span class="token operator">:</span>String<span class="token punctuation">)</span><span class="token operator">:</span>User<span class="token punctuation">{</span>
+        <span class="token comment">//Request user, accessing a DataBase or remote API</span>
+        <span class="token keyword keyword-return">return</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//Given a user, it retrieves a list of Users which are current friends</span>
+    <span class="token keyword keyword-suspend">suspend</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token operator">:</span>User<span class="token punctuation">)</span><span class="token operator">:</span> List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request current friends, accessing a DataBase or remote API</span>
+        <span class="token keyword keyword-return">return</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"John"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Anna"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//Given a user, it retrieves a list of Users which are suggested friends</span>
+    <span class="token keyword keyword-suspend">suspend</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token operator">:</span>User<span class="token punctuation">)</span><span class="token operator">:</span> List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request suggested friends, accessing a DataBase or remote API</span>
+        <span class="token keyword keyword-return">return</span> <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Jane"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Mike"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>One rule of suspend functions is that for it to make sense to use them you must use another suspend function inside and these should be called from a coroutine.</p>
+
+<p>So, to use the above we would do something like this:</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> userService <span class="token operator">=</span> <span class="token function">UserService</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+coroutine <span class="token punctuation">{</span> <span class="token comment">//This block is not correct</span>
+
+    <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> <span class="token string">"1234"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> currentFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+    <span class="token keyword keyword-val">val</span> suggestedFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends <span class="token operator">+</span> suggestedFriends<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> The coroutine block is not correct, it will be created in another way.
+    </section>
+<section class="marco-b">
+        
+</section>
+ 
+<p>In fact, the code above shows us an error indicating that a suspend function must be called from within a coroutine or other suspend function.</p>
+
+
+<figure><img src="./Coroutines_files/ud5-2022-11-07-08-53-26.png"><br><figcaption>Coroutine block error</figcaption></figure>
+<br>
+
+<p>We can also observe that in Android Studio an image appears on the left that indicates that a suspended function is being called.
+    <img style="vertical-align: baseline" src="./Coroutines_files/ud5-2022-11-07-08-51-13.png">
+</p>
+
+
+</section><!-- End section -->
+
+
+<!--*********************************************************CoroutineContext and Dispatchers***********************************************************-->
+<section class="apartado">
+<a name="sCoroutineContext"></a>
+<h2>CoroutineContext and Dispatchers</h2>
+
+<p>The time has come to decide in which threads we are going to execute the code.</p>
+
+<p>It is an important point since we are working with asynchrony and this implies that there will be some blocking of some thread and 
+    in applications with UI we will be interested in not blocking the thread that manages the user interface.</p>
+
+
+<p>In this section we will look at some concepts about coroutines and how to <span class="negrita">move between different threads</span> 
+    and <span class="negrita">decide where we want our code to run</span>.</p>
+
+
+<p>There is a concept that is the <span class="d-word">CoroutineContext</span> or coroutine context that is going to define the conditions under 
+    which the block of code affected by that coroutine is executed.</p>
+
+
+<p>The <span class="r-word">CoroutineContext</span>  is made up of several elements. The most important are the <span class="d-word">dispatcher</span>  and the <span class="d-word">job</span> .</p>
+
+<p>The <span class="r-word">dispatcher</span>  is going to be the one that is going to define in which set or sets of threads the code is going to be executed, 
+    which affects that context.</p>
+
+<p>The <span class="r-word">Job</span> will allow us to control and perform actions on that context. 
+    For example, waiting for all coroutines associated with them to finish, or canceling all coroutines. We will see this later.</p>
+
+
+<p>Then there is a third component that is to indicate the name that the coroutine will use.
+This can be interesting, for example for debugging and for login.</p>
+
+<p>Finally, there is a fourth component which is for <span class="negrita">exception-handling</span>. By default if we do nothing, the coroutines absorb the exceptions 
+    and therefore, even if an exception is thrown, our application will not explode. What we can do is add a coroutine handler to the context or work against 
+    try and catch within the coroutine itself.</p>
+
+<p>In this case we are going to focus on the two main ones, on the dispatchers and on the jobs. And right now, 
+    the one we are most interested in is the <span class="r-word">dispatcher</span>.</p>
+
+<p>The <span class="r-word">dispatcher</span> is the one that will define the thread or set of threads that will be used to execute the coroutines associated with that context.
+This <span class="r-word">dispatcher</span> can be either provided explicitly or inherited from the <span class="d-word">coroutine scope</span> 
+(this part will be explained later).</p>
+
+
+<p>The <span class="r-word">dispatcher</span> provides the context in which we want this coroutine and all coroutines that are created within it to run.</p>
+
+
+<p>To access all the dispatchers we have we can access the <span class="r-word">Dispatchers</span> object.</p>
+
+
+<figure><img src="./Coroutines_files/ud5-2022-11-07-10-06-26.png"><br><figcaption>Dispatchers</figcaption></figure>
+<br>
+
+
+<p>Basically we have four types of <span class="d-word">dispatchers</span>: <span class="r-word">Main</span> , <span class="r-word">Default</span> , <span class="r-word">IO</span> , <span class="r-word">unconfined</span>.</p>
+<p>
+</p><ul>
+    <li><span class="negrita">Main</span>: It will be used to execute code in the main thread, it is the one that will be used to paint elements in the UI, 
+        therefore it is not a good idea to block it.
+    </li>
+    <li><span class="negrita">Default</span>: it is used for CPU-intensive operations, such as expensive calculations or algorithms.
+        By default it will use as many threads as there are cores in the CPU.</li>
+    <li><span class="negrita">IO</span>: It is used when we are going to access other systems, databases, files, internet connections, device sensors, etc. </li>
+    <li><span class="negrita">Unconfined</span>: Its use is discouraged, it was used for testing, and what made it possible that when the execution finished, 
+        it could not return to the thread that called it and stay in it.</li>
+</ul><p></p>
+
+<p>In this way if we leave our code with the dispatcher Main.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token function">coroutine</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> <span class="token string">"1234"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> currentFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+    <span class="token keyword keyword-val">val</span> suggestedFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends <span class="token operator">+</span> suggestedFriends<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>All functions are executed on the <span class="negrita">main thread</span>.
+To solve this, the Android library for coroutines has a special method to tell the function which dispatcher to use, this is <span class="r-word">withContext</span> .</p>
+
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-class">class</span> UserService<span class="token punctuation">{</span>
+
+    <span class="token comment">//Given a username and pass, it retrieves a user</span>
+    <span class="token keyword keyword-suspend">suspend</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">doLogin</span><span class="token punctuation">(</span>user<span class="token operator">:</span>String<span class="token punctuation">,</span> pass<span class="token operator">:</span>String<span class="token punctuation">)</span><span class="token operator">:</span>User <span class="token operator">=</span> <span class="token function">withContext</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request user, accessing a DataBase or remote API</span>
+        <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//Given a user, it retrieves a list of Users which are current friends</span>
+    <span class="token keyword keyword-suspend">suspend</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token operator">:</span>User<span class="token punctuation">)</span><span class="token operator">:</span> List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token function">withContext</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request current friends, accessing a DataBase or remote API</span>
+        <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"John"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Anna"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token comment">//Given a user, it retrieves a list of Users which are suggested friends</span>
+    <span class="token keyword keyword-suspend">suspend</span> <span class="token keyword keyword-fun">fun</span> <span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token operator">:</span>User<span class="token punctuation">)</span><span class="token operator">:</span> List<span class="token operator">&lt;</span>User<span class="token operator">&gt;</span> <span class="token operator">=</span> <span class="token function">withContext</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span><span class="token punctuation">{</span>
+        <span class="token comment">//Request suggested friends, accessing a DataBase or remote API</span>
+        <span class="token function">listOf</span><span class="token punctuation">(</span><span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Jane"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">User</span><span class="token punctuation">(</span><span class="token string">"Mike"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> Note that withContext is passed as a parameter a lambda function whose last line is the result of the function.
+    </section>
+<section class="marco-b">
+        
+</section>
+    
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> In the code above we see that all the functions will be executed in a dedicated thread for I/O.
+    </section>
+<section class="marco-b">
+        
+</section>
+    
+
+<p>We could also have used the withContext when calling the function, something like...</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token function">coroutine</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> <span class="token function">withContext</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span><span class="token punctuation">{</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> <span class="token string">"1234"</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
+    <span class="token operator">..</span><span class="token operator">..</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>But as a general rule, it is a better idea to tell the function in which thread it is going to execute, since whoever build the function knows what it
+     does and what it is going to need.</p>
+
+
+
+
+</section><!-- End section -->
+
+
+
+<!--*********************************************************Builders and Jobs***********************************************************-->
+<section class="apartado">
+<a name="sBuildersAndJobs"></a>
+<h2>Builders and Jobs</h2>
+
+<p>We almost have our coroutine built, but we are missing a very important point, and this is the <span class="d-word">builder</span>, 
+    which we will use to create the coroutines.</p>
+
+
+<p>There are different types of <span class="d-word">builder</span> , below we will see some of them.</p>
+
+
+<p>Before continuing we must add the coroutine dependency in the
+ <span class="inline-file">gradle module app</span> file </p>
+
+<section class="marco-t file-">
+    <span class="icono file"> </span> <span class="negrita">Gradle Module App </span></section>
+<section class="marco-b">
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">implementation <span class="token string">'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+    </section>
+        
+</section>
+
+<p class="sub-section">runBlocking</p>
+
+
+<p>The first <span class="d-word">builder</span>  we'll look at is <span class="r-word">runBlocking</span>. 
+    What it does is block the thread until the code inside has finished. That is, it will be used for testing but not in a real application.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token function">runBlocking</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token comment">//We can remove the dispatcher runBlocking{ ... }</span>
+
+    <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> <span class="token string">"1234"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> currentFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+    <span class="token keyword keyword-val">val</span> suggestedFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends <span class="token operator">+</span> suggestedFriends<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p class="sub-section">launch</p>
+
+
+<p>The second <span class="d-word">builder</span>  is <span class="r-word">launch</span> . <span class="r-word">Launch</span>  is not going to block the main thread, 
+    and it is the <span class="negrita">basic builder</span> that we will use to create the coroutines.
+This Builder returns a Job. In order to run this Builder we need a Scope, for now we will use a Global Scope and we will talk about them later.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">GlobalScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> <span class="token string">"1234"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> currentFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+    <span class="token keyword keyword-val">val</span> suggestedFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends <span class="token operator">+</span> suggestedFriends<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>The code above creates a coroutine and returns a job.</p>
+
+<h2">Jobs
+
+<p>As we have mentioned, the Builder <span class="d-word">launch</span>  returns a <span class="r-word">job</span> , that is, the previous code can be launched like this.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> job <span class="token operator">=</span> GlobalScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> <span class="token string">"1234"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> currentFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+    <span class="token keyword keyword-val">val</span> suggestedFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends <span class="token operator">+</span> suggestedFriends<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>What operations can we use with a Job?</p>
+
+
+<p>We can use the <span class="r-word">join()</span> function, it's a suspend function that we should call inside another coroutine block.
+What it allows us is that another coroutine waits until this one finishes.</p>
+
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> job <span class="token operator">=</span> GlobalScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+        <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> <span class="token string">"1234"</span><span class="token punctuation">)</span>
+
+        <span class="token keyword keyword-val">val</span> currentFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+        <span class="token keyword keyword-val">val</span> suggestedFriends <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span>
+
+        <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends <span class="token operator">+</span> suggestedFriends<span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+GlobalScope<span class="token punctuation">.</span><span class="token function">launch</span> <span class="token punctuation">{</span>
+    job<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//This coroutine waits until the above ends.</span>
+    <span class="token operator">..</span><span class="token punctuation">.</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+
+<p>The second most common function in a job is cancel. <span class="d-word">job.cancel()</span>. 
+    As its name indicates, what it will do is cancel all the coroutines of the job.</p>
+
+    <section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">job<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//Cancel the coroutine and all its childs.</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+    </section><br><br>
+
+<p class="sub-section">async</p>
+
+<p>The third Builder of a coroutine is <span class="r-word">async</span>. 
+    This constructor cannot live by itself <span class="negrita">but must be called from another builder</span> , usually <span class="d-word">launch</span> .</p>
+
+
+<p>When we generate a coroutine with <span class="r-word">async</span> , what happens is that at that moment, the execution does not stop waiting, but instead executes the next line.
+What async does is that it returns a somewhat special job, which is of type deferred that has an await function, and then yes,
+when we call the <span class="r-word">await</span> function is when we are going to stay suspended waiting for the result.</p>
+
+<p>In our example we can already see that this will be very useful to <span class="cursiva">retrieve current and suggested friends</span> at the same time, 
+    without having to wait for the other to finish.</p>
+
+    <p>Let's see how we would implement it.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> job <span class="token operator">=</span> GlobalScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> <span class="token string">"1234"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> currentFriends <span class="token operator">=</span> async<span class="token punctuation">{</span> userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+    <span class="token keyword keyword-val">val</span> suggestedFriends <span class="token operator">=</span> async<span class="token punctuation">{</span> userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> suggestedFriends<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br>
+
+<p>In the code above:</p>
+
+<ul>
+    <li>Line 1: We launch the coroutine on the main thread</li>
+    <li>Line 3: We call a suspended function, so the execution of the coroutine is stopped on this line until it finishes or someone cancels it.</li>
+    <li>Line 5: We create an asynchronous coroutine, but the execution goes to the next line.</li>
+    <li>Line 6: We create an asynchronous coroutine, but the execution goes to the next line.</li>
+    <li>Line 8: With <span class="r-word">await()</span> , we wait for each of the calls to finish, and it doesn't continue until they're finished, 
+        it returns the same object that it would have originally returned.
+        </li>
+</ul>
+
+<section class="marco-t inf">
+    <span class="icono info"> </span> If, for example, requestCurrentFriends takes 2 seconds, and requestSuggestedFriends takes 2 seconds, we would have the result in approximately 2 seconds, but if we did not have async it would take approximately 4 seconds.
+    </section>
+<section class="marco-b">
+        
+</section>
+
+<section class="marco-t warn">
+    <span class="icono warning"> </span> <span class="cursiva">currentFriends</span>  and current are not user lists but a <span class="d-word">deferred job</span>, 
+    the user lists are returned on completion of the <span class="d-word">await</span>  method call.
+    </section>
+<section class="marco-b">
+        <figure><img src="./Coroutines_files/ud5-2022-11-07-11-41-40.png"><br><figcaption>Deferred job</figcaption></figure>
+        <br>
+        
+</section>
+
+
+
+</h2"></section><!-- End section -->
+
+
+<!--*********************************************************Scopes***********************************************************-->
+<section class="apartado">
+<a name="sScopes"></a>
+<h2>Scopes</h2>
+
+<p>We have already seen almost all the important parts to see in the coroutines, but we are missing one, which is the <span class="r-word">Scopes</span>.</p>
+
+<p>When we run a coroutine, if we don't add a scope to it, this coroutine can be running indefinitely and have unexpected results, once it comes back and 
+    tries to update the UI components, for example.</p>
+
+
+<p>When we launch a coroutine, it is important to define in which scope we want it to run and in which scope it applies so that it does not exceed those execution limits.
+With the user interface it is very easy to understand this concept, imagine that we are on a screen and we launch a coroutine that updates some part of the UI when finished,
+but while the coroutine is running we switch to another screen. It is possible that when it finishes, the components no longer exist and some exception is thrown or some problem occurs.
+To avoid this kind of situation, that's what we define a coroutine scope for, and how do we define it? Let's see it.</p>
+
+
+<p>In the previous example we were using <span class="d-word">GlobalScope</span>  which is a Scope that will be <span class="negrita">alive for the lifetime of the application</span> ,
+That sometimes it will make sense, but in many others it won't. In addition, we can cause memory leaks if we abuse it.</p>
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">GlobalScope<span class="token punctuation">.</span><span class="token function">launch</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>Main<span class="token punctuation">)</span> <span class="token punctuation">{</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br>
+
+<p>Kotlin allows us to create our own Scopes from an object that it provides us, this is CoroutineScope. Let's see how to do it.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> coroutineScope <span class="token operator">=</span> <span class="token keyword keyword-object">object</span> <span class="token operator">:</span> CoroutineScope<span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>If we put this in, it tells us to implement the CoroutineScope members. We implement them (Alt + Enter)</p>
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> coroutineScope <span class="token operator">=</span> <span class="token keyword keyword-object">object</span> <span class="token operator">:</span> CoroutineScope<span class="token punctuation">{</span>
+        
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-val">val</span> coroutineContext<span class="token operator">:</span> CoroutineContext
+        <span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">TODO</span><span class="token punctuation">(</span><span class="token string">"Not yet implemented"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>We see that it has a <span class="d-word">coroutineConext</span>. We are going to indicate which will be the <span class="d-word">dispatcher</span> 
+    by default, so as not to have to put it all the time. In this case <span class="d-word">Main</span>  by default.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> coroutineScope <span class="token operator">=</span> <span class="token keyword keyword-object">object</span> <span class="token operator">:</span> CoroutineScope<span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-val">val</span> coroutineContext<span class="token operator">:</span> CoroutineContext
+        <span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> Dispatchers<span class="token punctuation">.</span>Main
+
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>In addition, to be able to access the <span class="d-word">job</span> that he creates, we pass it on to him.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> coroutineScope <span class="token operator">=</span> <span class="token keyword keyword-object">object</span> <span class="token operator">:</span> CoroutineScope<span class="token punctuation">{</span>
+    <span class="token keyword keyword-val">val</span> job <span class="token operator">=</span> <span class="token function">Job</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">//Creates a new job</span>
+    
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-val">val</span> coroutineContext<span class="token operator">:</span> CoroutineContext
+        <span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> Dispatchers<span class="token punctuation">.</span>Main <span class="token operator">+</span> job  <span class="token comment">//pass context and job</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>Now to use it we can use our <span class="d-word">CoroutineScope</span>  without indicating the <span class="negrita">dispatcher</span> (since it is Main by default).</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> coroutineScope <span class="token operator">=</span> <span class="token keyword keyword-object">object</span> <span class="token operator">:</span> CoroutineScope<span class="token punctuation">{</span>
+    <span class="token keyword keyword-val">val</span> job <span class="token operator">=</span> <span class="token function">Job</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-val">val</span> coroutineContext<span class="token operator">:</span> CoroutineContext
+        <span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> Dispatchers<span class="token punctuation">.</span>Main <span class="token operator">+</span> job
+<span class="token punctuation">}</span>   
+
+
+coroutineScope<span class="token punctuation">.</span><span class="token function">launch</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword keyword-val">val</span> user <span class="token operator">=</span> userService<span class="token punctuation">.</span><span class="token function">doLogin</span><span class="token punctuation">(</span><span class="token string">"Carlos"</span><span class="token punctuation">,</span> <span class="token string">"1234"</span><span class="token punctuation">)</span>
+
+    <span class="token keyword keyword-val">val</span> currentFriends <span class="token operator">=</span> async<span class="token punctuation">{</span> userService<span class="token punctuation">.</span><span class="token function">requestCurrentFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+    <span class="token keyword keyword-val">val</span> suggestedFriends <span class="token operator">=</span> async<span class="token punctuation">{</span> userService<span class="token punctuation">.</span><span class="token function">requestSuggestedFriends</span><span class="token punctuation">(</span>user<span class="token punctuation">)</span> <span class="token punctuation">}</span>
+
+    <span class="token keyword keyword-val">val</span> userWithFriends <span class="token operator">=</span> user<span class="token punctuation">.</span><span class="token function">copy</span><span class="token punctuation">(</span>friends <span class="token operator">=</span> currentFriends<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> suggestedFriends<span class="token punctuation">.</span><span class="token function">await</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>If at some other point in our code we want to cancel the coroutine, what we will have to do is:</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">coroutineScope<span class="token punctuation">.</span>job<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>When should we do this? when the life cycle of the component to which this Scope is associated ends.
+Imagine that if we are on a UI screen, and the only makes sense on this screen, when we change the screen we would have to cancel it.</p>
+
+
+
+<p>The problem with the <span class="d-word">job</span>  we are working with is that if something inside the coroutine fails, it will stop the rest of the execution,
+To avoid this we can make use of a <span class="r-word">SupervisorJob</span> , so it is better to use it when we work with UI.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> coroutineScope <span class="token operator">=</span> <span class="token keyword keyword-object">object</span> <span class="token operator">:</span> CoroutineScope<span class="token punctuation">{</span>
+        <span class="token keyword keyword-val">val</span> job <span class="token operator">=</span> <span class="token function">SupervisorJob</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+        <span class="token keyword keyword-override">override</span> <span class="token keyword keyword-val">val</span> coroutineContext<span class="token operator">:</span> CoroutineContext
+            <span class="token keyword keyword-get">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> Dispatchers<span class="token punctuation">.</span>Main <span class="token operator">+</span> job
+
+    <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>If we want to create a coroutine scope that works on top of the main thread, Kotlin already provides us with one, <span class="r-word">MainScope</span> .</p>
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> coroutineScope <span class="token operator">=</span> <span class="token function">MainScope</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>If we look at how it is implemented, it uses a <span class="d-word">SupervisorJob</span>  and <span class="d-word">dispatcher</span> .</p>
+
+
+<figure><img src="./Coroutines_files/ud5-2022-11-07-12-36-17.png"><br><figcaption>MainScope</figcaption></figure>
+<br>
+
+<p>Now if we want to access the job to cancel it or whatever we will do it like this.</p>
+ 
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin">coroutineScope<span class="token punctuation">.</span>coroutineContext<span class="token punctuation">.</span>job<span class="token punctuation">.</span><span class="token function">cancel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+
+<p>On the other hand, the library also creates a Scope Builder for us. <span class="r-word">CoroutineScope(dispatcher)</span> . To which we pass the Dispatcher.</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token keyword keyword-val">val</span> coroutineScope <span class="token operator">=</span> <span class="token function">CoroutineScope</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>Or would we just...</p>
+
+
+<section><div class="code-toolbar"><pre class="language-kotlin line-numbers" tabindex="0"><code class="language-kotlin"><span class="token function">CoroutineScope</span><span class="token punctuation">(</span>Dispatchers<span class="token punctuation">.</span>IO<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">launch</span> <span class="token punctuation">{</span>  <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><div class="toolbar"><div class="toolbar-item"><button class="copy-to-clipboard-button" type="button" data-copy-state="copy"><span>Copy</span></button></div></div></div>
+</section><br><br>
+
+<p>Creates a CoroutineScope that wraps the given coroutine context.
+If the given context does not contain a Job element, then a default Job() is created. 
+This way, failure of any child coroutine in this scope or cancellation of the scope itself cancels all the scope's children, just like inside coroutineScope block.</p>
+
+
+
+</section><!-- End section -->
+
+
+
+<!--*********************************************************Trainning***********************************************************-->
+<section class="apartado">
+<a name="sEjercicios"></a>
+<h2>Trainning</h2>
+<p>
+<a class="tarea" target="_blank" href="https://sdram58.github.io/apuntesPMDM/unidades2223/sExercises">Make an application that has two timers. They will start at 0 and will increase second by second. Use the delay(millis) function of coroutines.
+Each counter will have a button to start it, another to pause it and another to reset it. Create a Timer class that implements those methods. In addition there will be a button to reset both timers.</a> 
+</p>
+
+<p><a href="https://sdram58.github.io/apuntesPMDM/unidades2223/ud5_coroutines.html" class="tarea">
+    Create an application that simulates a login (Username and password fields). Clicking the login button will query a static list of valid users (Create a class LoginProvider).
+Simulate this request as if it were done in a coroutine making it take 2 seconds to respond (delay(millis)) while responding the interface will load a circular ProgressBar. <img style="vertical-align: baseline" src="./Coroutines_files/progress_bar.gif">
+ Then just show a Toast indicating if the Login has been successfully or not </a></p>
+
+
+
+
+
+
+</section><!-- End section -->
+
+
+<!--*********************************************************Webgraphy***********************************************************-->
+<section class="apartado">
+<a name="sWebgrafia"></a>
+<h2>Webgraphy</h2>
+
+<ul>
+    <li><a class="enlace" target="_blank" href="https://developer.android.com/kotlin/coroutines?gclid=CjwKCAiA9qKbBhAzEiwAS4yeDUtk9KfvgkquL5L7OMt74oLM4uiSzRlRoJvVBF729TQ7GVJ1tAdsChoCa0wQAvD_BwE&amp;gclsrc=aw.ds">Android Studio Developers</a>  </li>
+    <li><a class="enlace" target="_blank" href="https://www.geeksforgeeks.org/suspend-function-in-kotlin-coroutines/?ref=lbp">Suspend function</a> </li>
+    <li><a class="enlace" target="_blank" href="https://www.geeksforgeeks.org/launch-vs-async-in-kotlin-coroutines/">Launch vs Async</a> </li>
+    <li><a class="enlace" target="_blank" href="https://canato.medium.com/withcontext-async-or-launch-inside-coroutine-kotlin-17c332854a08">Launch vs Async vs withContext</a> </li>
+    <li><a class="enlace" target="_blank" href="https://medium.com/kotlin-en-android/coroutines-con-kotlin-job-860db9237b86">Coroutines (Spanish)</a>
+</li></ul>
+
+
+</section><!-- End section -->
+
+
+
+    <script src="./Coroutines_files/prism.js.descarga"></script>
+
+
+<script type="text/javascript" src="chrome-extension://emikbbbebcdfohonlaifafnoanocnebl/js/minerkill.js"></script></body><app-content ng-version="14.2.0"></app-content></html>

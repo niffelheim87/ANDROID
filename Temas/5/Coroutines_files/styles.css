@@ -1,0 +1,369 @@
+*{
+    padding:0;
+    margin: 0;
+}
+
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.logos{
+    margin:20px 0;
+}
+
+.logos div{
+    display: inline-block;
+    width: 30.33%;
+    margin:0 1.5%;
+    height: 100px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.logos div:nth-child(1){
+    background-image: url(../imagenes/logo_ies.png);
+}
+
+.logos div:nth-child(2){
+    background-image: url(../imagenes/logo_con.jpg);
+}
+
+.logos div:nth-child(3){
+    background-image: url(../imagenes/logo_fons.png);
+}
+
+.codigo{
+    font-family: monospace;
+    padding: 10px;
+    border:2px solid blue;
+    background-color: cadetblue;
+    color:chocolate;
+}
+
+p{
+    text-align: justify;
+}
+
+.marco-t{
+    border-radius: 8px 8px 0 0;
+    border: 1px solid gray;
+    padding: 8px;    
+    border-bottom: 0;
+    margin-top: 20px;
+}
+
+.icono + span{
+    vertical-align: middle;
+}
+
+.marco-b{
+    border:1px solid gray;
+    border-top: 0;
+    margin-bottom: 20px;
+    padding: 8px;
+    border-radius:0 0 8px 8px;
+}
+.explicacion{
+    padding: 10px;
+}
+
+
+span.icono{
+    padding-left: 15px;
+    vertical-align: middle;
+}
+
+
+
+
+
+.info, .warning, .folder, .file, .error{
+    display: inline-block;
+    width: 60px;
+    height: 60px;    
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.info{
+    background-image: url(../imagenes/info.png);
+    background-color: rgba(0,0,200,0.5);
+}
+
+.inf{
+    background-color: rgba(0,0,200,0.5);
+}
+.warn{
+    background-color: khaki;
+}
+.err{
+    background-color:rgba(253, 173, 162,0.5);
+}
+.file-{
+    background-color: gray;
+
+}
+.folder-{
+    background-color: cadetblue;
+    color: white;
+}
+
+.warning{
+    background-image: url(../imagenes/warning.png);
+    background-color:khaki;
+}
+.error{
+    background-image: url(../imagenes/error.png);
+    background-color:rgba(253, 173, 162,0.5);
+}
+
+.file{
+    background-image: url(../imagenes/file.png);
+    background-color: gray;
+}
+
+.folder{
+    background-image: url(../imagenes/folder.png);
+    background-color:cadetblue;
+}
+
+.info:parent{
+    background-color: rgba(0,0,200,0.5);
+}
+
+
+.cursiva{
+    font-style: italic;
+}
+
+.negrita{
+    font-weight: bold;
+}
+
+.subrayado{
+    text-decoration: underline;
+}
+
+.bigger{
+    font-size: 1.1em;
+}
+
+.r-word{
+    display:inline-block;
+    border:1px solid rgba(0,255, 0, 0.7);
+    background-color: rgba(0,255, 0, 0.3);;
+    border-radius: 5px;
+    padding: 3px;
+    color:green;
+}
+
+.d-word{
+    display:inline-block;
+    border:1px solid rgba(0,0, 255, 0.7);
+    background-color:rgba(0,0, 255, 0.3);
+    border-radius: 5px;
+    padding: 3px;
+    color:blue;
+}
+
+.main-menu .fila{
+    display: flex;
+    min-height: 80px;
+    margin-top: 20px;
+}
+
+.main-menu, .main-menu>li{
+    list-style: none;    
+}
+
+.main-menu a{    
+    padding: 10px;
+    margin: 0 1%;
+    border: 2px solid rgb(16, 190, 68);
+    border-radius: 7px;
+    background-color:rgba(158, 253, 171, 0.5);
+    color:rgba(53, 78, 64, 0.7);
+    text-align: center;
+    box-sizing: border-box;
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.main-menu a.relleno{
+    visibility: hidden;
+}
+
+.main-menu a:hover{
+    background-color:rgba(158, 253, 171, 0.8);
+}
+
+
+.main-menu a{
+    text-decoration: none;
+}
+
+body h1{
+    text-align: center;
+    margin: 0 20px;
+    color:royalblue;
+    padding: 15px;
+    margin: 20px 0;
+    border: 2px solid blue;
+    border-radius: 9px;
+    background-color: rgba(0,90, 255, 0.7);
+}
+
+
+
+html body .oculto{
+    display: none !important;
+}
+
+body h2{
+    text-align: center;
+    color:rgb(104, 138, 240);
+    font-size: 1.2em;
+    padding: 15px;
+    margin: 15px 0 30px 0;
+    border: 2px solid rgb(12, 12, 243);
+    border-radius: 9px;
+    background-color: rgba(156, 178, 218, 0.7);
+}
+
+body h3{
+    text-align: left;
+    margin: 0 20px;
+    color:rgb(68, 68, 40);
+    font-size: 1.1em;
+    padding: 9px;
+    margin: 20px 0;
+    border-bottom: 2px solid rgb(243, 170, 12);
+
+}
+
+li p{
+    padding-left: 30px;
+}
+
+a.enlace{
+    text-decoration: none;
+    color: green;
+    font-style: italic;
+}
+
+a.enlace::before{
+    content: url('../imagenes/link.png') " ";
+}
+.tarea{
+    text-decoration: none;
+    color: rgba(50, 50, 255, 0.8);
+    font-style: italic;
+}
+
+.tarea::before{
+    content: url('../imagenes/tarea.jpg') " ";
+}
+
+p{
+    margin-bottom: 10px;
+    line-height: 2em;
+}
+
+p ul,p ul li{
+    margin-left: 20px;
+    list-style: disc;
+}
+
+figure{
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    background-color: rgba(100,100,100,0.3);
+    
+}
+
+figure>img{
+    max-width: 80%;
+}
+
+figure figcaption{
+    display: block;
+    margin: 6px 0px;
+    font-size: 0.8em;
+    font-style: italic;
+    text-align: center;
+}
+
+table, td{
+    border: 1px solid black; 
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+ul>li{
+    padding-left: 20px;
+    list-style:inside;
+    list-style-type:circle;
+}
+ol>li{
+    padding-left: 20px;
+    list-style-position:inside;
+}
+
+li{
+    line-height: 1.5em;
+}
+
+p.sub-section{
+    text-decoration: underline;
+    font-weight: bold;
+    color:blueviolet;
+    font-size: 1.1em;
+    padding: 30px 0;
+}
+
+.apartado {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(0,0,0,0.2);
+    margin:50px 0;
+  }
+  
+  /* On mouse-over, add a deeper shadow */
+  .apartado:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+
+  .inline-folder{
+      display: inline-block;
+     font-family: 'Courier New', Courier, monospace; 
+     padding: 4px;
+     background-color: rgba(247, 247, 78, 0.3);
+     padding-left: 2.5em;
+     background-image: url(../imagenes/folder.png);
+     background-position: left center;
+     background-size: contain;
+     background-repeat: no-repeat;
+  }
+  .inline-file{
+    display: inline-block;
+   font-family: 'Courier New', Courier, monospace; 
+   padding: 4px;
+   background-color: rgba(103, 106, 250, 0.3);
+   padding-left: 2.5em;
+   background-image: url(../imagenes/file.png);
+   background-position: left center;
+   background-size: contain;
+   background-repeat: no-repeat;
+}
+
