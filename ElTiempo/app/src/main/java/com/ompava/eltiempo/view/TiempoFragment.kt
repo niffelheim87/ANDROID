@@ -34,5 +34,11 @@ class TiempoFragment : Fragment() {
         tiempoViewModel.tiempoModel.observe(viewLifecycleOwner, Observer {
             binding.tvTiempo.text = it.tiempo
         })
+
+        binding.tvTiempo.setOnClickListener {
+            tiempoViewModel.getTiempo()
+            }
+
+
     }
 }
