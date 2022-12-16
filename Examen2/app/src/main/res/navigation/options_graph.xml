@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/options_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/options_graph"
+    app:startDestination="@id/homeFragment">
 
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.ompava.test1ev.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/questionnaireFragment"
+        android:name="com.ompava.test1ev.QuestionnaireFragment"
+        android:label="QuestionnaireFragment" />
 </navigation>

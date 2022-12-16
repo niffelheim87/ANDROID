@@ -5,9 +5,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/tvTiempo">
-    </TextView>
+        android:id="@+id/tvTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="El tiempo"
+        android:textSize="40sp"
+        android:paddingBottom="50dp"
+        app:layout_constraintBottom_toTopOf="@id/guidebottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guidetop"
+        app:layout_constraintVertical_bias="0.131" />
+
+    <ImageView
+        android:id="@+id/ivTiempo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher_background"
+        app:layout_constraintBottom_toTopOf="@id/guidebottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+        app:layout_constraintVertical_bias="0.62" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidetop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="125dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidebottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="664dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

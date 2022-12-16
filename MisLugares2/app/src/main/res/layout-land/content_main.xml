@@ -9,47 +9,62 @@
     tools:showIn="@layout/activity_main">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:gravity="center"
         android:id="@+id/linearLayout"
-        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:padding="30dp">
-        <Button
-            android:id="@+id/button01"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="@dimen/margen_botones">
+
+        <TableLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:text="@string/accion_mostrar"
+            android:gravity="center"
+            android:stretchColumns="*"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-        </Button>
-        <Button
-            android:id="@+id/button02"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:text="@string/accion_preferencias"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button01">
-        </Button>
-        <Button
-            android:id="@+id/button03"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:text="@string/accion_acerca_de"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button02">
-        </Button>
-        <Button
-            android:id="@+id/button04"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:text="@string/accion_salir"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button03">
-        </Button>
+
+            <TableRow>
+
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/button01"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accion_mostrar"
+                   />
+
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/button02"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accion_preferencias"
+                    />
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/button03"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accion_acerca_de"
+                    app:layout_constraintTop_toBottomOf="@+id/button02" />
+
+                <Button
+                    android:layout_margin="10dp"
+                    android:id="@+id/button04"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/accion_salir"
+                    app:layout_constraintTop_toBottomOf="@+id/button03" />
+            </TableRow>
+        </TableLayout>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

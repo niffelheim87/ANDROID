@@ -31,13 +31,8 @@ class TiempoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        tiempoViewModel.tiempoModel.observe(viewLifecycleOwner, Observer {
-            binding.tvTiempo.text = it.tiempo
-        })
 
-        binding.tvTiempo.setOnClickListener {
-            tiempoViewModel.getTiempo()
-            }
+
 
 
     }

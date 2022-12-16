@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.ompava.eltiempo.databinding.ActivityMainBinding
 import com.ompava.eltiempo.viewmodel.TiempoViewModel
 
@@ -20,12 +21,19 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        tiempoViewModel.tiempoModel.observe(this, Observer {
-            binding.tvTiempo.text = it.tiempo
-        })
+        val tiempoViewModel = ViewModelProvider(this)[TiempoViewModel::class.java]
 
-        binding.tvTiempo.setOnClickListener {
-            tiempoViewModel.getTiempo()
+        tiempoViewModel.imageLiveData.observe(this){ imageID ->
+            binding.ivTiempo.setImageResource(imageID)
+
+
         }
+
+        tiempoViewModel.tituloLiveData.observe(this){ titulo ->
+            binding.tvTitulo.setText(titulo)
+
+
+        }
+
     }
 }

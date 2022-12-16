@@ -1,13 +1,16 @@
 package com.ompava.mislugares
 
-import com.ompava.mislugares.RepositorioLugares.elemento
-import com.ompava.mislugares.RepositorioLugares
-import com.ompava.mislugares.LugaresLista
 
-class Principal {
-    var lugares: RepositorioLugares = LugaresLista()
+object Principal {
+    @JvmStatic
+    fun main(main: Array<String>) {
+        val lugares = LugaresLista()
+        lugares.añadeEjemplos()
+        for (i in 0..lugares.tamaño()-1) {
+            println(lugares.elemento(i).toString())
+        }
 
-    init {
-        println(lugares.elemento(i).toString())
     }
+
+
 }

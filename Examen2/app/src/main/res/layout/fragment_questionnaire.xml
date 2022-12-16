@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:padding="20dp"
-    tools:context=".framework.ui.main.fragments.QuestionnaireFragment">
+    tools:context=".QuestionnaireFragment">
 	
 	<!-- TODO: Acuerdate de cambiar el contexto de arriba y los recursos de colores y strings -->
 

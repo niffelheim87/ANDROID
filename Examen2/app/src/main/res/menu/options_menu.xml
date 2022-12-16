@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-  
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/options1Fragment"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/options2Fragment"
+        android:icon="@drawable/ic_play"
+        android:title="Start"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/options3Fragment"
+        android:icon="@drawable/ic_exit"
+        android:title="Exit"
+        app:showAsAction="always"/>
+
 </menu>

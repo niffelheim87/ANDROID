@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
-class Tab1 : Fragment() {
+class Tab3 : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater?.inflate(R.layout.tab1, container, false)
+        return inflater?.inflate(R.layout.tab3, container, false)
     }
 }
